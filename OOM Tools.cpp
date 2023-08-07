@@ -19,8 +19,5 @@ start:
     std::cout << "本次约写入" << old_n << "MB内存(不准确!!)\n\n\a" << std::endl;
     Sleep(1000);
     goto start;
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> cefed75 (test)
