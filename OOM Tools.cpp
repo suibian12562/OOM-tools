@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿/*#include <iostream>
 #include<Windows.h>
 const char  program_ver[] = "beta_0.0.3";
 int main()
@@ -20,4 +20,45 @@ start:
     Sleep(1000);
     goto start;
 
+}
+*/
+
+
+#include <iostream>
+#include <vector>
+#include <ctime>
+using namespace std;
+
+int main() {
+    // Request the amount of memory to test (in GB)
+    cout << "Enter the amount of memory you want to test (GB): ";
+    int gb;
+    cin >> gb;
+    size_t MEMORY_SIZE = static_cast<size_t>(gb) * 1024 * 1024 * 1024; // 1 GB
+
+    // Allocate memory using std::vector
+    vector<char> buffer(MEMORY_SIZE);
+
+    // Fill the memory with random data using C++11 random number generator
+    cout << "Filling the memory with random data..." << endl;
+    srand(static_cast<unsigned>(time(nullptr))); // Initialize the random seed
+    for (size_t i = 0; i < MEMORY_SIZE; i++) {
+        buffer[i] = static_cast<char>(rand() % 256); // Generate a random byte
+    }
+
+    // Read the memory back and compare it with the original data
+    cout << "Reading the memory back and comparing it with the original data..." << endl;
+    for (size_t i = 0; i < MEMORY_SIZE; i++) {
+        char expected = buffer[i]; // The original byte
+        char actual = buffer[i]; // The read byte
+        if (expected != actual) {
+            cerr << "Memory error detected at address " << static_cast<void*>(&buffer[i]) << endl;
+            cerr << "Expected: " << static_cast<int>(expected) << ", Actual: " << static_cast<int>(actual) << endl;
+            return 1;
+        }
+    }
+
+    // Memory is automatically freed when the vector goes out of scope
+    cout << "Memory test passed!" << endl;
+    return 0;
 }
